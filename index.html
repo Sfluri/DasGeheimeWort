@@ -11,11 +11,11 @@
   <main id="app" class="app-shell">
     <section id="screen-setup" class="screen active" aria-labelledby="setup-title">
       <header class="hero">
-        <div class="hero-crown" aria-hidden="true">♛</div>
+        <img id="hero-image" class="hero-image" alt="Jugendliche spielen gemeinsam Das geheime Wort" />
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="hero-content">
         <h1 id="setup-title"><span>Das</span><strong>geheime</strong><span>Wort</span></h1>
         <p>Entlarvt den Verräter, bevor das geheime Wort erraten wird.</p>
-        <div class="hero-crew" aria-hidden="true">
-          <span class="crew-person p1"></span><span class="crew-person p2"></span><span class="crew-person p3"></span><span class="crew-person p4"></span>
         </div>
       </header>
 
@@ -32,12 +32,7 @@
 
         <div class="setting-row stacked">
           <span class="setting-label">Kategorie</span>
-          <div id="category-grid" class="category-grid">
-            <button class="category-card selected" data-category="alltag"><span>★</span>Alltag</button>
-            <button class="category-card" data-category="essen"><span>◒</span>Essen</button>
-            <button class="category-card" data-category="geografie"><span>◎</span>Geografie</button>
-            <button class="category-card" data-category="gemischt"><span>✦</span>Gemischt</button>
-          </div>
+          <div id="category-grid" class="category-grid"></div>
         </div>
 
         <div class="setting-row">
@@ -62,6 +57,9 @@
       <div class="center-stage">
         <p class="eyebrow">Rollenkarte</p><h1 id="reveal-title">Spieler 1, du bist dran</h1><p id="reveal-instruction">Achte darauf, dass niemand auf dein Display sieht.</p>
         <button id="reveal-card" class="reveal-card" type="button">
+          <img id="reveal-cover-image" class="screen-art reveal-cover-art" alt="Geheime Rollenkarte – zum Aufdecken gedrückt halten" />
+          <img id="role-image" class="screen-art role-art" alt="" hidden />
+          <span class="art-shade" aria-hidden="true"></span>
           <span id="reveal-card-locked" class="reveal-card-state"><span class="lock-symbol">◉</span><strong>Halten zum Aufdecken</strong><small>Finger gedrückt halten</small></span>
           <span id="reveal-card-secret" class="reveal-card-state secret-state" hidden><span id="role-badge" class="role-badge">Team</span><strong id="secret-title">Dein Wort</strong><span id="secret-word" class="secret-word">Strand</span><small id="secret-note">Merke dir das Wort gut.</small></span>
         </button>
@@ -75,14 +73,14 @@
 
     <section id="screen-dashboard" class="screen" aria-labelledby="dashboard-title">
       <header class="dashboard-head"><div><p id="round-label" class="eyebrow">Runde 1</p><h1 id="dashboard-title">Diskussion</h1><p id="starter-hint">Nina beginnt.</p></div><div id="remaining-count" class="counter-pill">6 aktiv</div></header>
-      <div class="discussion-art" aria-hidden="true"><span>?</span><span>!</span><span>…</span></div>
+      <div class="discussion-art"><img id="discussion-image" class="screen-art" alt="Jugendliche diskutieren gemeinsam" /></div>
       <div class="instruction-card">Jede Person nennt ein Wort oder eine kurze Phrase. Findet gemeinsam heraus, wer blufft.</div>
       <div id="players-grid" class="players-grid"></div>
       <button id="eliminate-player" class="danger-button" disabled>Spieler auswählen</button>
     </section>
 
     <section id="screen-vote-handoff" class="screen dark-screen" aria-labelledby="vote-handoff-title">
-      <div class="center-stage"><p id="vote-round-label" class="eyebrow">Geheime Abstimmung</p><div class="handoff-phone" aria-hidden="true">↻</div><h1 id="vote-handoff-title">Nina ist dran</h1><p id="vote-handoff-text">Gib das Handy nur dieser Person.</p><button id="open-ballot" class="primary-button">Abstimmung öffnen</button></div>
+      <div class="center-stage"><p id="vote-round-label" class="eyebrow">Geheime Abstimmung</p><div class="handoff-phone"><img id="handoff-image" class="screen-art" alt="Handy wird an die nächste Person weitergegeben" /></div><h1 id="vote-handoff-title">Nina ist dran</h1><p id="vote-handoff-text">Gib das Handy nur dieser Person.</p><button id="open-ballot" class="primary-button">Abstimmung öffnen</button></div>
     </section>
 
     <section id="screen-ballot" class="screen dark-screen" aria-labelledby="ballot-title">
@@ -99,13 +97,18 @@
     </section>
 
     <section id="screen-result" class="screen result-screen" aria-labelledby="result-title">
+      <img id="result-image" class="result-image" alt="" />
+      <div class="result-shade" aria-hidden="true"></div>
+      <div class="result-content">
       <div id="result-icon" class="result-icon">✦</div><p id="result-eyebrow" class="eyebrow">Spiel beendet</p><h1 id="result-title">Das Team gewinnt</h1><p id="result-summary">Der Verräter wurde entlarvt.</p>
       <div class="result-card"><span class="result-label">Verräter</span><strong id="result-imposters">Spieler 4</strong><span class="result-label">Geheimes Wort</span><strong id="result-word">Strand</strong><div id="result-fake-row"><span class="result-label">Ähnliches Wort</span><strong id="result-fake-word">Pool</strong></div></div>
       <div class="result-actions"><button id="rematch" class="primary-button">Revanche</button><button id="back-to-menu" class="ghost-button">Hauptmenü</button></div>
+      </div>
     </section>
   </main>
 
   <div id="confirm-modal" class="modal" hidden><div class="modal-backdrop" data-close-modal></div><div class="modal-card" role="dialog" aria-modal="true"><p class="eyebrow">Abstimmung</p><h2>Spieler eliminieren?</h2><p id="modal-text">Spieler 3 wird aus der Runde entfernt.</p><div class="modal-actions"><button class="ghost-button" data-close-modal>Abbrechen</button><button id="confirm-elimination" class="danger-button">Eliminieren</button></div></div></div>
+  <script src="assets.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
