@@ -1799,3 +1799,16 @@ img {
     -webkit-user-drag: none;
     user-select: none;
 }
+/* iOS-Menü und Textauswahl in der gesamten Rollenansicht verhindern */
+#screen-reveal,
+#screen-reveal *,
+#revealCard,
+#revealCard * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+#secretWord {
+  pointer-events: none;
+}
