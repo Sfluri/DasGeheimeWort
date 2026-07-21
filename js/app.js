@@ -871,15 +871,62 @@
   });
   $('revealBackButton').addEventListener('click', openCancelDialog);
 
-  const revealCard = $('revealCard');
-  revealCard.addEventListener('pointerdown', event => { event.preventDefault(); revealCard.setPointerCapture?.(event.pointerId); revealRole(); });
-  ['pointerup','pointercancel','pointerleave'].forEach(type => revealCard.addEventListener(type, event => { event.preventDefault(); hideRole(); }));
-  revealCard.addEventListener('keydown', event => {
-    if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) { event.preventDefault(); revealRole(); }
+const revealCard = $('revealCard');
+
+/* iPhone: Kopieren-/Nachschlagen-Menü auf der Rollenkarte verhindern */
+revealCard.addEventListener('contextmenu', event => {
+  event.preventDefault();
+});
+
+/* Touch-Steuerung für iPhone und iPad */
+revealCard.addEventListener('touchstart', event => {
+  event.preventDefault();
+  revealRole();
+}, { passive: false });
+
+revealCard.addEventListener('touchend', event => {
+  event.preventDefault();
+  hideRole();
+}, { passive: false });
+
+revealCard.addEventListener('touchcancel', event => {
+  event.preventDefault();
+  hideRole();
+}, { passive: false });
+
+/* Maus und Eingabestift */
+revealCard.addEventListener('pointerdown', event => {
+  if (event.pointerType === 'touch') return;
+
+  event.preventDefault();
+  revealCard.setPointerCapture?.(event.pointerId);
+  revealRole();
+});
+
+['pointerup', 'pointercancel', 'pointerleave'].forEach(type => {
+  revealCard.addEventListener(type, event => {
+    if (event.pointerType === 'touch') return;
+
+    event.preventDefault();
+    hideRole();
   });
-  revealCard.addEventListener('keyup', event => {
-    if (event.key === ' ' || event.key === 'Enter') { event.preventDefault(); hideRole(); }
-  });
+});
+
+/* Tastaturbedienung */
+revealCard.addEventListener('keydown', event => {
+  if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) {
+    event.preventDefault();
+    revealRole();
+  }
+});
+
+revealCard.addEventListener('keyup', event => {
+  if (event.key === ' ' || event.key === 'Enter') {
+    event.preventDefault();
+    hideRole();
+  }
+});
+  
   window.addEventListener('blur', hideRole);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) hideRole();
