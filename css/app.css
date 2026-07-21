@@ -579,7 +579,7 @@ button { color: inherit; }
 .reveal-card__cover, .reveal-card__secret {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 28px;
+  padding: 24px 28px;
   transition: opacity .2s ease, transform .24s ease;
 }
 .reveal-card__cover {
@@ -598,25 +598,36 @@ button { color: inherit; }
 .role-pill { padding: 7px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; background: rgba(7,10,18,.42); font-size: .7rem; font-weight: 860; letter-spacing: .16em; }
 .secret-caption { margin-top: 34px; color: rgba(255,255,255,.72); font-size: .82rem; }
 .secret-word {
+  display: block;
   width: 100%;
   max-width: 100%;
   margin-top: 8px;
-  display: inline-block;
-  padding: 0.25rem 0;
-  padding-inline: 4px;
+  padding: 0.12em 4px 0.18em;
+
   font-size: var(--word-size, clamp(2.2rem, 11vw, 4.2rem));
-  line-height: 1.25;
+  line-height: 1.18;
   letter-spacing: var(--word-spacing, -.055em);
+  font-weight: 790;
+
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: visible;
   overflow-wrap: normal;
   word-break: keep-all;
   text-wrap: nowrap;
-  text-shadow: 0 8px 28px rgba(0,0,0,.45);
+
+  text-shadow: 0 6px 24px rgba(0,0,0,.48);
 }
-.reveal-card__secret p { padding-top: 1.25rem; padding-bottom: 1.25rem; margin: 14px 0 0; max-width: 260px; color: rgba(255,255,255,.78); font-size: .86rem; line-height: 1.4; }
+.reveal-card__secret p {
+  max-width: 290px;
+  margin: 12px 0 0;
+  padding: 0 0 4px;
+
+  color: rgba(255,255,255,.64);
+  font-size: .86rem;
+  line-height: 1.4;
+}
 .is-hidden { visibility: hidden; opacity: 0; pointer-events: none; }
 
 .screen--complete {
