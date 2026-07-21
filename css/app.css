@@ -601,9 +601,11 @@ button { color: inherit; }
   width: 100%;
   max-width: 100%;
   margin-top: 8px;
+  display: inline-block;
+  padding: 0.25rem 0;
   padding-inline: 4px;
   font-size: var(--word-size, clamp(2.2rem, 11vw, 4.2rem));
-  line-height: .98;
+  line-height: 1.25;
   letter-spacing: var(--word-spacing, -.055em);
   text-align: center;
   text-transform: uppercase;
@@ -614,7 +616,7 @@ button { color: inherit; }
   text-wrap: nowrap;
   text-shadow: 0 8px 28px rgba(0,0,0,.45);
 }
-.reveal-card__secret p { margin: 14px 0 0; max-width: 260px; color: rgba(255,255,255,.78); font-size: .86rem; line-height: 1.4; }
+.reveal-card__secret p { padding-top: 1.25rem; padding-bottom: 1.25rem; margin: 14px 0 0; max-width: 260px; color: rgba(255,255,255,.78); font-size: .86rem; line-height: 1.4; }
 .is-hidden { visibility: hidden; opacity: 0; pointer-events: none; }
 
 .screen--complete {
