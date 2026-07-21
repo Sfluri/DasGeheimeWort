@@ -1,0 +1,15 @@
+{
+  "name": "Das geheime Wort",
+  "short_name": "Geheimes Wort",
+  "description": "Lokales Social-Deduction-Partyspiel für ein gemeinsames iPhone.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#070a12",
+  "theme_color": "#070a12",
+  "icons": [
+    {"src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
