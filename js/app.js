@@ -988,17 +988,19 @@ revealCard.addEventListener('keyup', event => {
     if (event.target.closest('button:not(:disabled), .category-card, .switch')) haptic(5);
   });
 document.addEventListener('selectstart', event => {
-  const interactiveElement = event.target.closest(
-    'button, .category-card, .toggle-row, .difficulty-control label, .candidate-option, .reveal-card, .player-avatar'
-  );
+  if (!event.target.closest('input, textarea, select, [contenteditable="true"]')) {
+    event.preventDefault();
+  }
+});
 
-  if (interactiveElement) {
+document.addEventListener('contextmenu', event => {
+  if (!event.target.closest('input, textarea, select, [contenteditable="true"]')) {
     event.preventDefault();
   }
 });
   
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
+    window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js', { updateViaCache: 'none' }).then(reg => reg.update()).catch(() => {}));
   }
 
   initModernScrollUi();
