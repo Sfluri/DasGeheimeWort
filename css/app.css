@@ -1812,3 +1812,23 @@ img {
 #secretWord {
   pointer-events: none;
 }
+
+/* iOS: Textauswahl und Kopiermenue in der gesamten App deaktivieren */
+html,
+body,
+#app,
+#app * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Eingabefelder muessen weiterhin bearbeitbar bleiben */
+#app input,
+#app textarea,
+#app select,
+#app [contenteditable="true"] {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  -webkit-touch-callout: default !important;
+}
