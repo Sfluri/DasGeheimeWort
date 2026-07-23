@@ -1845,3 +1845,9 @@ body,
   user-select: text !important;
   -webkit-touch-callout: default !important;
 }
+
+/* Version 6.1.4 — Spieler innerhalb der Einstellungen */
+.setting-player-button {
+  margin-top: 16px;
+  min-height: 50px;
+}

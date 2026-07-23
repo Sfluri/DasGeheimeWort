@@ -1,6 +1,6 @@
-const CACHE = 'das-geheime-wort-v6.1.3';
+const CACHE = 'das-geheime-wort-v6.1.4';
 const ASSETS = [
-  './index.html', './css/app.css?v=6.1.3', './data/words.js', './js/app.js?v=6.1.3', './manifest.webmanifest',
+  './index.html', './css/app.css?v=6.1.4', './data/words.js', './js/app.js?v=6.1.4', './manifest.webmanifest',
   './assets/hero.jpg', './assets/role-team.jpg', './assets/role-traitor.jpg',
   './assets/discussion.jpg', './assets/result.jpg', './assets/icon-180.png',
   './assets/icon-192.png', './assets/icon-512.png'

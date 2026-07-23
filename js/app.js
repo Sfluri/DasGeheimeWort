@@ -4,6 +4,8 @@
   const STORAGE_KEY = 'dasGeheimeWort.settings.v12';
   const ACTIVE_GAME_KEY = 'dasGeheimeWort.activeGame.v12';
   const WORD_BAG_KEY = 'dasGeheimeWort.wordBag.v1';
+  let settingsSaveTimer;
+
   const LEGACY_STORAGE_KEYS = ['dasGeheimeWort.settings.v11', 'dasGeheimeWort.settings.v10', 'dasGeheimeWort.settings.v8', 'dasGeheimeWort.settings.v7', 'dasGeheimeWort.settings.v6', 'dasGeheimeWort.settings.v5', 'dasGeheimeWort.settings.v4'];
   const categoryLabels = window.DGW_CATEGORY_LABELS || {};
   const wordDatabase = Array.isArray(window.DGW_WORDS) ? window.DGW_WORDS : [];
@@ -402,6 +404,11 @@
     $('continueButton').disabled = false;
   }
 
+  function saveSettingsSoon(delay = 180) {
+    window.clearTimeout(settingsSaveTimer);
+    settingsSaveTimer = window.setTimeout(() => saveSettings(), delay);
+  }
+
   function loadSettings() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY) || LEGACY_STORAGE_KEYS.map(key => localStorage.getItem(key)).find(Boolean);
@@ -450,11 +457,13 @@
         state.names[index] = input.value;
         clear.disabled = !input.value;
         label.classList.remove('name-error');
+        saveSettingsSoon();
       });
       clear.addEventListener('click', () => {
         input.value = '';
         state.names[index] = '';
         clear.disabled = true;
+        saveSettings();
         input.focus();
       });
       $('nameList').appendChild(label);
@@ -844,31 +853,22 @@
   document.querySelectorAll('[data-step]').forEach(button => button.addEventListener('click', () => {
     state[button.dataset.step] += Number(button.dataset.direction);
     updateControls();
+    saveSettings();
   }));
-  $('setupForm').addEventListener('submit', event => {
-    event.preventDefault();
+  $('setupForm').addEventListener('change', event => {
+    if (event.target.matches('input[name="category"]')) {
+      const selected = [...document.querySelectorAll('input[name="category"]:checked')];
+      if (!selected.length) {
+        event.target.checked = true;
+        showToast('Mindestens eine Kategorie muss ausgewählt bleiben.');
+        return;
+      }
+    }
     readSettings();
-    if (!state.categories.length) {
-      showToast('Bitte wähle mindestens eine Kategorie.');
-      return;
-    }
-    if (!getAvailableWords().length) {
-      showToast('Für diese Filterauswahl sind keine Begriffe verfügbar.');
-      return;
-    }
+    updateControls();
     saveSettings();
-    showToast('Einstellungen gespeichert.');
-    showScreen('start');
   });
-  $('playersForm').addEventListener('submit', event => {
-    event.preventDefault();
-    const names = validateNames();
-    if (!names) return;
-    state.names = names;
-    saveSettings();
-    showToast('Spieler gespeichert.');
-    showScreen('start');
-  });
+
   $('revealBackButton').addEventListener('click', openCancelDialog);
 
 const revealCard = $('revealCard');
