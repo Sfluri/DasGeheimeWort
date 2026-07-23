@@ -1860,3 +1860,885 @@ body,
   margin-top: 16px;
   min-height: 50px;
 }
+
+
+/* =========================================================
+   Version 7.0.0 – Theme-Auswahl
+   Das Comic-Theme verwendet in 7.0 noch das bestehende Design.
+   Die technische Umschaltung ist bereits vollständig aktiv.
+   ========================================================= */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.theme-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.theme-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-card__surface {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  min-height: 154px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-md);
+  background: rgba(255,255,255,.055);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  transition: border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+
+.theme-card:active .theme-card__surface { transform: scale(.985); }
+
+.theme-card input:checked + .theme-card__surface {
+  border-color: rgba(101, 190, 255, .82);
+  background: rgba(63, 150, 222, .14);
+  box-shadow: 0 0 0 2px rgba(78, 165, 255, .14), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.theme-card input:focus-visible + .theme-card__surface {
+  outline: 3px solid rgba(78, 165, 255, .42);
+  outline-offset: 3px;
+}
+
+.theme-card__preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 5px;
+  min-height: 72px;
+  overflow: hidden;
+  padding: 9px;
+  border-radius: 14px;
+}
+
+.theme-card__preview span {
+  display: block;
+  border-radius: 7px;
+}
+
+.theme-card__preview span:first-child { grid-row: 1 / 3; }
+
+.theme-card__preview--modern {
+  background: linear-gradient(145deg, #101d33, #070a12);
+  border: 1px solid rgba(117, 190, 255, .28);
+}
+.theme-card__preview--modern span:first-child { background: linear-gradient(160deg, #17385e, #0d1b30); }
+.theme-card__preview--modern span:nth-child(2) { background: #4aa1db; }
+.theme-card__preview--modern span:nth-child(3) { background: rgba(255,255,255,.16); }
+
+.theme-card__preview--comic {
+  background: linear-gradient(145deg, #71d2ff, #fff2a8);
+  border: 2px solid rgba(29, 49, 78, .7);
+}
+.theme-card__preview--comic span { border: 1px solid rgba(29, 49, 78, .65); }
+.theme-card__preview--comic span:first-child { background: #ffcf4a; }
+.theme-card__preview--comic span:nth-child(2) { background: #ff7185; }
+.theme-card__preview--comic span:nth-child(3) { background: #65d38e; }
+
+.theme-card__copy {
+  display: grid;
+  gap: 2px;
+  padding-right: 25px;
+}
+.theme-card__copy strong { font-size: .96rem; }
+.theme-card__copy small { color: var(--muted); font-size: .76rem; line-height: 1.25; }
+
+.theme-card__check {
+  position: absolute;
+  right: 12px;
+  bottom: 15px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #4aa1db;
+  color: #fff;
+  font-size: .78rem;
+  font-weight: 900;
+  opacity: 0;
+  transform: scale(.72);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.theme-card input:checked + .theme-card__surface .theme-card__check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 370px) {
+  .theme-grid { grid-template-columns: 1fr; }
+  .theme-card__surface { min-height: 132px; }
+}
+
+/* Version 7.1.0 ----------------------------------------------------------
+   Comic-Design fuer Kinder. Das moderne Design bleibt unveraendert.
+*/
+body.theme-comic {
+  --bg: #78d8ff;
+  --text: #20304a;
+  --muted: rgba(32, 48, 74, .78);
+  --muted-soft: rgba(32, 48, 74, .62);
+  --line: rgba(32, 48, 74, .28);
+  --glass: rgba(255, 255, 255, .88);
+  --glass-strong: rgba(255, 255, 255, .96);
+  --blue: #238de8;
+  --violet: #8756d8;
+  color-scheme: light;
+  font-family: "Arial Rounded MT Bold", "Trebuchet MS", Arial, sans-serif;
+}
+
+body.theme-comic,
+body.theme-comic .app-shell {
+  background:
+    radial-gradient(circle at 10% 12%, rgba(255,255,255,.82) 0 4%, transparent 4.4%),
+    radial-gradient(circle at 88% 17%, rgba(255,255,255,.72) 0 5%, transparent 5.4%),
+    linear-gradient(180deg, #79d9ff 0%, #b9eeff 50%, #fff3a8 100%);
+}
+
+body.theme-comic .app-shell {
+  box-shadow: 0 0 0 3px rgba(32,48,74,.12), 0 18px 55px rgba(32,90,132,.22);
+}
+
+body.theme-comic .hero {
+  background: linear-gradient(180deg, #69d3ff 0%, #a8eaff 55%, #fff0a4 100%);
+}
+body.theme-comic .hero__blur,
+body.theme-comic .hero__image { opacity: 0; animation: none; }
+body.theme-comic .hero__shade {
+  background:
+    radial-gradient(ellipse at 18% 22%, rgba(255,255,255,.95) 0 8%, transparent 8.5%),
+    radial-gradient(ellipse at 31% 20%, rgba(255,255,255,.9) 0 6%, transparent 6.5%),
+    radial-gradient(ellipse at 82% 31%, rgba(255,255,255,.88) 0 8%, transparent 8.5%),
+    radial-gradient(ellipse at 69% 28%, rgba(255,255,255,.82) 0 5.5%, transparent 6%),
+    linear-gradient(180deg, transparent 0 57%, rgba(255,241,160,.42) 78%, rgba(255,241,160,.82) 100%);
+}
+body.theme-comic .hero__vignette {
+  background:
+    radial-gradient(circle at 11% 72%, rgba(87,199,112,.75) 0 8%, transparent 8.5%),
+    radial-gradient(circle at 91% 77%, rgba(87,199,112,.78) 0 11%, transparent 11.5%),
+    radial-gradient(circle at 77% 83%, rgba(50,177,91,.58) 0 7%, transparent 7.5%);
+}
+
+body.theme-comic .brand { text-shadow: 0 3px 0 rgba(255,255,255,.82), 0 7px 0 rgba(32,48,74,.12); }
+body.theme-comic .brand__eyebrow,
+body.theme-comic .topbar__eyebrow,
+body.theme-comic .dialog__eyebrow {
+  color: #334a70;
+  font-weight: 900;
+}
+body.theme-comic .brand__title {
+  font-weight: 950;
+  letter-spacing: -.055em;
+  transform: rotate(-1deg);
+}
+body.theme-comic .brand__accent {
+  color: #ff5f79;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  filter: none;
+  text-shadow: 0 3px 0 #fff, 0 6px 0 rgba(32,48,74,.15);
+}
+body.theme-comic .brand__title span:first-child {
+  color: #244c83;
+  text-shadow: 0 3px 0 #fff, 0 6px 0 rgba(32,48,74,.13);
+}
+body.theme-comic .brand__subtitle { color: #294260; font-weight: 700; }
+
+body.theme-comic .button {
+  border: 3px solid #243b5c;
+  border-radius: 20px;
+  color: #20304a;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 6px 0 #243b5c, 0 12px 22px rgba(32,48,74,.16);
+  font-weight: 900;
+}
+body.theme-comic .button:active {
+  transform: translateY(4px) scale(.99);
+  box-shadow: 0 2px 0 #243b5c, 0 7px 14px rgba(32,48,74,.14);
+}
+body.theme-comic .button--primary {
+  color: #20304a;
+  background: linear-gradient(180deg, #ffd956, #ffb72f);
+  border-color: #243b5c;
+  box-shadow: 0 6px 0 #243b5c, 0 12px 22px rgba(32,48,74,.16), inset 0 2px 0 rgba(255,255,255,.7);
+}
+body.theme-comic .button--secondary {
+  background: linear-gradient(180deg, #ffffff, #e9f8ff);
+  border-color: #243b5c;
+  box-shadow: 0 6px 0 #243b5c, 0 12px 22px rgba(32,48,74,.13), inset 0 2px 0 #fff;
+}
+body.theme-comic .button--ghost { background: rgba(255,255,255,.86); }
+body.theme-comic .button--danger { color: #fff; background: linear-gradient(180deg, #ff6f83, #e94762); }
+body.theme-comic .button__arrow {
+  color: #fff;
+  background: #2d93e7;
+  border: 2px solid #243b5c;
+}
+body.theme-comic .meta-nav { color: #304966; }
+body.theme-comic .meta-nav span { background: rgba(32,48,74,.4); }
+
+body.theme-comic .screen--setup::before,
+body.theme-comic .screen--scroll {
+  background:
+    radial-gradient(circle at 8% 11%, rgba(255,255,255,.82) 0 3%, transparent 3.4%),
+    radial-gradient(circle at 92% 17%, rgba(255,255,255,.72) 0 4%, transparent 4.4%),
+    linear-gradient(180deg, #78d9ff, #b9efff 50%, #fff1a6);
+}
+body.theme-comic .topbar {
+  background: linear-gradient(180deg, rgba(121,217,255,.98) 0%, rgba(121,217,255,.9) 76%, transparent 100%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.theme-comic .topbar__title { color: #20304a; font-weight: 950; }
+body.theme-comic .icon-button {
+  color: #20304a;
+  background: #fff;
+  border: 3px solid #243b5c;
+  border-radius: 15px;
+  box-shadow: 0 4px 0 #243b5c;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.theme-comic .icon-button:active { transform: translateY(3px); box-shadow: 0 1px 0 #243b5c; }
+
+body.theme-comic .glass-card,
+body.theme-comic .name-field,
+body.theme-comic .vote-panel,
+body.theme-comic .result-card,
+body.theme-comic .elimination-card,
+body.theme-comic .complete-card {
+  color: #20304a;
+  border: 3px solid #243b5c;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 6px 0 rgba(36,59,92,.95), 0 14px 24px rgba(32,48,74,.13), inset 0 2px 0 #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.theme-comic .glass-card { border-radius: 23px; }
+body.theme-comic .setting-heading h3,
+body.theme-comic .section-heading h3 { color: #20304a; font-weight: 950; }
+body.theme-comic .setting-heading p,
+body.theme-comic .section-heading p,
+body.theme-comic .players-intro p { color: #50647d; }
+
+body.theme-comic .stepper {
+  border: 3px solid #243b5c;
+  background: #effaff;
+  box-shadow: 0 3px 0 rgba(36,59,92,.88);
+}
+body.theme-comic .stepper__button { color: #20304a; background: #ffd755; font-weight: 950; }
+body.theme-comic .stepper__value { color: #20304a; background: #fff; }
+
+body.theme-comic .category-card__visual {
+  border: 3px solid #243b5c;
+  background-color: #fff;
+  box-shadow: 0 5px 0 #243b5c, inset 0 2px 0 rgba(255,255,255,.8);
+}
+body.theme-comic .category-card input:checked + .category-card__visual {
+  border-color: #243b5c;
+  box-shadow: 0 5px 0 #243b5c, 0 0 0 5px #ffd348;
+  transform: translateY(-2px) rotate(-.5deg);
+}
+body.theme-comic .category-card__label {
+  color: #20304a;
+  background: rgba(255,255,255,.93);
+  border: 2px solid #243b5c;
+  font-weight: 900;
+}
+
+body.theme-comic .difficulty-control,
+body.theme-comic .option-list { background: rgba(255,255,255,.92); }
+body.theme-comic .difficulty-option,
+body.theme-comic .toggle-row { color: #20304a; }
+body.theme-comic .switch {
+  border: 2px solid #243b5c;
+  background: #d6e7ef;
+  box-shadow: inset 0 1px 0 #fff;
+}
+body.theme-comic .toggle-row input:checked + .switch { background: #65d68b; box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
+body.theme-comic .switch::after { border: 2px solid #243b5c; box-shadow: 0 2px 0 rgba(36,59,92,.35); }
+body.theme-comic .conditional { border-top-color: rgba(36,59,92,.2); }
+
+body.theme-comic .theme-card__surface {
+  border: 3px solid #243b5c;
+  background: #fff;
+  box-shadow: 0 5px 0 #243b5c;
+}
+body.theme-comic .theme-card input:checked + .theme-card__surface {
+  border-color: #243b5c;
+  background: #fff7c9;
+  box-shadow: 0 5px 0 #243b5c, 0 0 0 5px #ffd348;
+}
+body.theme-comic .theme-card__check { background: #53c978; border: 2px solid #243b5c; }
+body.theme-comic .theme-card__copy small { color: #5b6d82; }
+
+body.theme-comic .name-field {
+  border-radius: 19px;
+  background: rgba(255,255,255,.94);
+}
+body.theme-comic .name-field input { color: #20304a; font-weight: 850; }
+body.theme-comic .name-field input::placeholder { color: rgba(32,48,74,.42); }
+body.theme-comic .name-field__clear { color: #20304a; background: #e6f5fb; border: 2px solid #243b5c; }
+body.theme-comic .name-error { border-color: #e33f5e !important; box-shadow: 0 5px 0 #9b2940, 0 0 0 4px rgba(255,91,118,.24) !important; }
+body.theme-comic .form-error { color: #be2444; }
+body.theme-comic .player-avatar {
+  border: 3px solid #243b5c;
+  background: #fff;
+  box-shadow: 0 3px 0 #243b5c;
+}
+body.theme-comic .player-avatar__fallback { background: linear-gradient(145deg, #ffd954, #ff7587); color: #20304a; }
+
+body.theme-comic .minimal-topbar { color: #29425f; }
+body.theme-comic .screen-kicker { color: #206ea9; font-weight: 950; }
+body.theme-comic .handoff-content h2,
+body.theme-comic .reveal-copy h2,
+body.theme-comic .complete-card h2 { color: #20304a; font-weight: 950; text-shadow: 0 2px 0 #fff; }
+body.theme-comic .handoff-content p:last-child,
+body.theme-comic .reveal-copy > p:last-child,
+body.theme-comic .complete-card > p { color: #465f7a; }
+
+body.theme-comic .screen--reveal {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(255,255,255,.78) 0 4%, transparent 4.5%),
+    radial-gradient(circle at 89% 19%, rgba(255,255,255,.7) 0 5%, transparent 5.5%),
+    linear-gradient(180deg, #73d5ff, #b9efff 50%, #fff1a8);
+}
+body.theme-comic .reveal-card {
+  border: 4px solid #243b5c;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 8px 0 #243b5c, 0 20px 34px rgba(32,48,74,.18);
+}
+body.theme-comic .reveal-card:active { transform: translateY(4px) scale(.99); box-shadow: 0 4px 0 #243b5c, 0 13px 24px rgba(32,48,74,.16); }
+body.theme-comic .reveal-card.is-revealed { border-color: #243b5c; box-shadow: 0 8px 0 #243b5c, 0 0 0 6px #ffd348, 0 20px 34px rgba(32,48,74,.18); }
+body.theme-comic .reveal-card__cover {
+  color: #20304a;
+  background:
+    radial-gradient(circle at 20% 22%, rgba(255,255,255,.7) 0 5%, transparent 5.5%),
+    radial-gradient(circle at 83% 77%, rgba(255,255,255,.5) 0 6%, transparent 6.5%),
+    linear-gradient(145deg, #ffd852, #ff9c55);
+}
+body.theme-comic .reveal-card__cover::before {
+  content: "?";
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  margin-bottom: 14px;
+  border: 4px solid #243b5c;
+  border-radius: 50%;
+  color: #fff;
+  background: #6c59d9;
+  box-shadow: 0 5px 0 #243b5c;
+  font-size: 2.7rem;
+  font-weight: 950;
+  transform: rotate(-6deg);
+}
+body.theme-comic .reveal-card__cover small { color: #4a4f55; font-weight: 750; }
+body.theme-comic .reveal-card__secret { text-shadow: 0 2px 4px rgba(0,0,0,.45); }
+body.theme-comic .role-pill { border: 3px solid #fff; background: rgba(32,48,74,.76); box-shadow: 0 3px 0 rgba(32,48,74,.6); }
+body.theme-comic .secret-word { font-weight: 950; }
+
+body.theme-comic .screen--discussion,
+body.theme-comic .screen--vote-handoff,
+body.theme-comic .screen--elimination,
+body.theme-comic .screen--result,
+body.theme-comic .screen--complete {
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255,255,255,.75) 0 4%, transparent 4.5%),
+    radial-gradient(circle at 91% 18%, rgba(255,255,255,.68) 0 5%, transparent 5.5%),
+    linear-gradient(180deg, #78d9ff 0%, #b8efff 52%, #fff1a7 100%);
+}
+body.theme-comic .discussion-content,
+body.theme-comic .result-section-title,
+body.theme-comic .summary-row,
+body.theme-comic .result-word,
+body.theme-comic .result-roles,
+body.theme-comic .elimination-role { color: #20304a; }
+body.theme-comic .alive-strip { color: #20304a; }
+body.theme-comic .candidate-card,
+body.theme-comic .candidate-list label {
+  color: #20304a;
+  border: 3px solid #243b5c;
+  background: #fff;
+  box-shadow: 0 4px 0 #243b5c;
+}
+body.theme-comic .candidate-list input:checked + * { background: #fff2a7; box-shadow: 0 4px 0 #243b5c, 0 0 0 4px #ffd348; }
+
+body.theme-comic .dialog::backdrop { background: rgba(36,59,92,.45); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+body.theme-comic .dialog__surface {
+  color: #20304a;
+  border: 4px solid #243b5c;
+  background: #fffbea;
+  box-shadow: 0 8px 0 #243b5c, 0 24px 60px rgba(32,48,74,.24);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.theme-comic .dialog__surface p:not(.dialog__eyebrow) { color: #4b6179; }
+body.theme-comic .dialog__close { color: #20304a; background: #ffd854; border: 2px solid #243b5c; }
+body.theme-comic .toast {
+  color: #20304a;
+  border: 3px solid #243b5c;
+  background: #fff;
+  box-shadow: 0 5px 0 #243b5c;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  font-weight: 850;
+}
+
+body.theme-comic .button:focus-visible,
+body.theme-comic .meta-nav__item:focus-visible,
+body.theme-comic .icon-button:focus-visible,
+body.theme-comic .stepper__button:focus-visible,
+body.theme-comic .category-card input:focus-visible + .category-card__visual {
+  outline-color: #ff5e7a;
+}
+
+/* Version 7.2.0 ----------------------------------------------------------
+   Comic illustrations and avatar set. The Modern theme remains unchanged. */
+body.theme-comic .hero__blur,
+body.theme-comic .hero__image {
+  opacity: 1;
+  background-image: url('../assets/comic/hero.png');
+  background-position: center top;
+  background-size: cover;
+  animation: hero-drift 18s ease-in-out infinite alternate;
+}
+
+body.theme-comic .hero__blur {
+  filter: blur(18px) saturate(1.08);
+  transform: scale(1.12);
+  opacity: .45;
+}
+
+body.theme-comic .hero__image {
+  filter: saturate(1.03) contrast(1.02);
+}
+
+body.theme-comic .hero__shade {
+  background: linear-gradient(180deg, rgba(9,17,34,.02) 0%, rgba(9,17,34,.08) 43%, rgba(9,17,34,.88) 82%, #091122 100%);
+}
+
+body.theme-comic .hero__vignette {
+  background: radial-gradient(circle at 50% 28%, transparent 28%, rgba(7,13,27,.12) 63%, rgba(7,13,27,.62) 100%);
+}
+
+body.theme-comic .reveal-card.is-team .reveal-card__secret {
+  background-image: linear-gradient(180deg, rgba(8,24,43,.08), rgba(8,18,34,.82)), url('../assets/comic/team.png');
+  background-position: center;
+  background-size: cover;
+}
+
+body.theme-comic .reveal-card.is-traitor .reveal-card__secret {
+  background-image: linear-gradient(180deg, rgba(45,5,12,.06), rgba(28,4,10,.84)), url('../assets/comic/traitor.png');
+  background-position: center;
+  background-size: cover;
+}
+
+body.theme-comic .screen--complete,
+body.theme-comic .screen--discussion,
+body.theme-comic .screen--vote-handoff,
+body.theme-comic .screen--elimination {
+  background-image: linear-gradient(180deg, rgba(8,15,29,.04), rgba(8,15,29,.2) 39%, rgba(8,15,29,.94) 82%, #08101f), url('../assets/comic/discussion.png');
+  background-position: center;
+  background-size: cover;
+}
+
+body.theme-comic .screen--result {
+  background-image: linear-gradient(180deg, rgba(8,15,29,.02), rgba(8,15,29,.16) 40%, rgba(8,15,29,.92) 82%, #08101f), url('../assets/comic/result.png');
+  background-position: center top;
+  background-size: cover;
+}
+
+body.theme-comic .player-avatar img {
+  object-fit: contain;
+  background: #fff;
+}
+
+
+/* Version 7.2.1 ----------------------------------------------------------
+   Korrekturen fuer Theme-Start, Lesbarkeit und Bilddarstellung. */
+
+/* Die breiten Comic-Bilder werden auf Hochformat-Displays vollstaendig
+   dargestellt, statt durch background-size: cover stark beschnitten zu werden. */
+body.theme-comic .hero__blur {
+  background-size: cover;
+  background-position: center top;
+}
+body.theme-comic .hero__image {
+  background-color: #091122;
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
+  transform: none;
+  animation: none;
+}
+
+body.theme-comic .reveal-card.is-team .reveal-card__secret,
+body.theme-comic .reveal-card.is-traitor .reveal-card__secret {
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+body.theme-comic .screen--complete,
+body.theme-comic .screen--discussion,
+body.theme-comic .screen--vote-handoff,
+body.theme-comic .screen--elimination,
+body.theme-comic .screen--result {
+  background-color: #08101f;
+  background-size: 100% auto;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+/* Eindeutige Textfarben auf allen hellen Comic-Flaechen. */
+body.theme-comic .glass-card,
+body.theme-comic .glass-card h2,
+body.theme-comic .glass-card h3,
+body.theme-comic .glass-card strong,
+body.theme-comic .glass-card label,
+body.theme-comic .players-intro strong,
+body.theme-comic .vote-panel,
+body.theme-comic .vote-panel p,
+body.theme-comic .candidate-option,
+body.theme-comic .candidate-option strong,
+body.theme-comic .candidate-name,
+body.theme-comic .elimination-card h2,
+body.theme-comic .elimination-card p,
+body.theme-comic .result-card h2,
+body.theme-comic .result-card p,
+body.theme-comic .result-role-row,
+body.theme-comic .result-role-row strong,
+body.theme-comic .result-player-name,
+body.theme-comic .summary-row strong,
+body.theme-comic .complete-card .screen-kicker,
+body.theme-comic .result-card .screen-kicker,
+body.theme-comic .elimination-card .screen-kicker {
+  color: #20304a;
+  text-shadow: none;
+}
+
+body.theme-comic .setting-heading p,
+body.theme-comic .section-heading p,
+body.theme-comic .players-intro p,
+body.theme-comic .vote-panel > p,
+body.theme-comic .result-card > p,
+body.theme-comic .elimination-card > p,
+body.theme-comic .complete-card > p,
+body.theme-comic .theme-card__copy small {
+  color: #50647d;
+}
+
+body.theme-comic .category-card input:checked ~ .category-card__label {
+  color: #20304a;
+}
+
+body.theme-comic .result-role-row strong.is-team {
+  color: #237849;
+}
+body.theme-comic .result-role-row strong.is-traitor,
+body.theme-comic .elimination-role.is-traitor {
+  color: #b52543;
+}
+
+/* Texte, die direkt auf den dunklen Szenenbildern liegen, bleiben weiss. */
+body.theme-comic .screen--discussion > .minimal-topbar,
+body.theme-comic .screen--vote-handoff > .minimal-topbar,
+body.theme-comic .screen--elimination > .minimal-topbar,
+body.theme-comic .screen--discussion .discussion-content,
+body.theme-comic .screen--discussion .discussion-content h2,
+body.theme-comic .screen--discussion .discussion-content p,
+body.theme-comic .screen--discussion .screen-kicker,
+body.theme-comic .screen--vote-handoff .handoff-content,
+body.theme-comic .screen--vote-handoff .handoff-content h2,
+body.theme-comic .screen--vote-handoff .handoff-content p,
+body.theme-comic .screen--vote-handoff .screen-kicker {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,.72);
+}
+
+body.theme-comic .alive-chip {
+  color: #fff;
+  background: rgba(8,16,31,.72);
+  border-color: rgba(255,255,255,.3);
+}
+
+@media (min-width: 720px) {
+  body.theme-comic .hero__image,
+  body.theme-comic .screen--complete,
+  body.theme-comic .screen--discussion,
+  body.theme-comic .screen--vote-handoff,
+  body.theme-comic .screen--elimination,
+  body.theme-comic .screen--result {
+    background-size: min(100%, 720px) auto;
+  }
+}
+
+/* Version 7.2.2 – bessere Lesbarkeit in Kategorien und Schwierigkeit */
+body.theme-comic .setting-section {
+  color: #17263d;
+}
+
+body.theme-comic .setting-section .section-heading h3 {
+  color: #17263d;
+  text-shadow: none;
+}
+
+body.theme-comic .setting-section .section-heading p {
+  color: #465d78;
+  text-shadow: none;
+}
+
+body.theme-comic .category-grid--compact {
+  gap: 12px;
+}
+
+body.theme-comic .category-card--compact {
+  min-height: 66px;
+  border: 2px solid #9eb2c5;
+  background: #ffffff;
+  box-shadow: 0 3px 0 rgba(36,59,92,.28);
+}
+
+body.theme-comic .category-card--compact .category-card__visual {
+  border: 2px solid #243b5c;
+  background: #e8f5ff;
+  box-shadow: none;
+}
+
+body.theme-comic .category-card--compact .category-card__label,
+body.theme-comic .category-card--compact input:checked ~ .category-card__label {
+  margin: 0 0 0 10px;
+  padding: 0;
+  color: #17263d;
+  background: transparent;
+  border: 0;
+  font-size: .9rem;
+  font-weight: 850;
+  line-height: 1.2;
+  box-shadow: none;
+}
+
+body.theme-comic .category-card--compact:has(input:checked) {
+  border-color: #243b5c;
+  background: #fff3a8;
+  box-shadow: 0 4px 0 #243b5c, 0 0 0 3px rgba(255,203,44,.34);
+  transform: translateY(-1px);
+}
+
+body.theme-comic .category-card--compact input:checked + .category-card__visual {
+  border-color: #243b5c;
+  background: #ffd64d;
+  box-shadow: none;
+  transform: none;
+}
+
+body.theme-comic .difficulty-control {
+  gap: 9px;
+  padding: 9px;
+  border: 2px solid #9eb2c5;
+  background: #ffffff;
+  box-shadow: 0 3px 0 rgba(36,59,92,.28);
+}
+
+body.theme-comic .difficulty-control span {
+  min-height: 48px;
+  color: #243b5c;
+  border: 2px solid #afc2d3;
+  background: #eef7fc;
+  font-size: .9rem;
+  font-weight: 850;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+body.theme-comic .difficulty-control input:checked + span {
+  color: #17263d;
+  border-color: #243b5c;
+  background: #ffd64d;
+  box-shadow: 0 3px 0 #243b5c;
+  transform: translateY(-1px);
+}
+
+body.theme-comic .difficulty-control input:focus-visible + span,
+body.theme-comic .category-card--compact input:focus-visible + .category-card__visual {
+  outline: 3px solid #1687d9;
+  outline-offset: 3px;
+}
+
+/* Version 7.2.3 – Aufdeckkarte bleibt beim Druecken und Aufdecken gleich gross */
+.reveal-card,
+.reveal-card:active,
+.reveal-card.is-revealed,
+.reveal-card.is-team.is-revealed,
+.reveal-card.is-traitor.is-revealed {
+  transform: none !important;
+}
+
+.reveal-card__cover,
+.reveal-card__secret,
+.reveal-card.is-revealed .reveal-card__cover,
+.reveal-card.is-revealed .reveal-card__secret {
+  transform: none !important;
+}
+
+/* Version 7.2.4 – Aufdeckkarte behaelt beim Gedrueckthalten exakt dieselben Aussenmasse */
+.reveal-card,
+.reveal-card:hover,
+.reveal-card:focus,
+.reveal-card:focus-visible,
+.reveal-card:active,
+.reveal-card.is-revealed,
+.reveal-card.is-team.is-revealed,
+.reveal-card.is-traitor.is-revealed,
+body.theme-comic .reveal-card,
+body.theme-comic .reveal-card:active,
+body.theme-comic .reveal-card.is-revealed {
+  width: min(100%, 430px) !important;
+  height: clamp(292px, 42vh, 350px) !important;
+  min-height: clamp(292px, 42vh, 350px) !important;
+  max-height: clamp(292px, 42vh, 350px) !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.reveal-card__cover,
+.reveal-card__secret,
+.reveal-card.is-revealed .reveal-card__cover,
+.reveal-card.is-revealed .reveal-card__secret {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+}
+
+@media (max-height: 700px) {
+  .reveal-card,
+  .reveal-card:active,
+  .reveal-card.is-revealed,
+  body.theme-comic .reveal-card,
+  body.theme-comic .reveal-card:active,
+  body.theme-comic .reveal-card.is-revealed {
+    height: 258px !important;
+    min-height: 258px !important;
+    max-height: 258px !important;
+  }
+}
+
+/* Version 7.2.5 – hochwertige Aufdeckkarte im Modern-Design */
+body:not(.theme-comic) .reveal-card {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(16, 23, 38, .98), rgba(6, 10, 18, .99)) padding-box,
+    linear-gradient(145deg, rgba(133, 181, 255, .42), rgba(255, 255, 255, .09) 38%, rgba(74, 126, 224, .32) 100%) border-box;
+  box-shadow:
+    0 30px 72px rgba(0, 0, 0, .46),
+    0 0 42px rgba(68, 125, 224, .08),
+    inset 0 1px 0 rgba(255, 255, 255, .10);
+}
+
+body:not(.theme-comic) .reveal-card__cover {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(91, 146, 236, .17), transparent 35%),
+    radial-gradient(circle at 15% 8%, rgba(255, 255, 255, .055), transparent 27%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, .022) 0 1px, transparent 1px 13px),
+    linear-gradient(180deg, rgba(23, 31, 48, .97), rgba(7, 11, 19, .99));
+}
+
+body:not(.theme-comic) .reveal-card__cover::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -35%;
+  bottom: -35%;
+  left: -62%;
+  width: 42%;
+  pointer-events: none;
+  opacity: 0;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(160, 202, 255, .14), rgba(255, 255, 255, .22), rgba(160, 202, 255, .10), transparent);
+  filter: blur(2px);
+  animation: modernCardShine 9s ease-in-out 1.4s infinite;
+}
+
+body:not(.theme-comic) .reveal-card__cover::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 0;
+  inset: 12px;
+  border: 1px solid rgba(178, 207, 255, .08);
+  border-radius: 21px;
+  pointer-events: none;
+  box-shadow: inset 0 0 28px rgba(85, 139, 229, .035);
+}
+
+body:not(.theme-comic) .reveal-card__cover strong,
+body:not(.theme-comic) .reveal-card__cover small {
+  position: relative;
+  z-index: 1;
+}
+
+body:not(.theme-comic) .reveal-card__cover strong {
+  font-size: clamp(1.2rem, 4.8vw, 1.34rem);
+  font-weight: 800;
+  letter-spacing: -.025em;
+  text-shadow: 0 2px 16px rgba(72, 135, 238, .18);
+}
+
+body:not(.theme-comic) .reveal-card__cover small {
+  color: rgba(229, 238, 252, .64);
+  font-weight: 560;
+  letter-spacing: .01em;
+}
+
+@keyframes modernCardShine {
+  0%, 62% { left: -62%; opacity: 0; }
+  68% { opacity: .7; }
+  82% { left: 122%; opacity: .38; }
+  88%, 100% { left: 122%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.theme-comic) .reveal-card__cover::before { animation: none; }
+}
+
+/* Version 7.2.6 – klare kleine Texte auf dem Comic-Startbildschirm */
+body.theme-comic .screen--start .brand__eyebrow {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: .17em;
+  text-shadow: none;
+  -webkit-text-stroke: .45px rgba(7, 16, 33, .96);
+  paint-order: stroke fill;
+}
+
+body.theme-comic .screen--start .brand__subtitle {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: none;
+  -webkit-text-stroke: .4px rgba(7, 16, 33, .94);
+  paint-order: stroke fill;
+}

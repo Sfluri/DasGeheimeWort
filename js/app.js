@@ -12,7 +12,7 @@
 
   const screens = Object.fromEntries([...document.querySelectorAll('.screen')].map(el => [el.id.replace('screen-', ''), el]));
   const state = {
-    players: 5, traitors: 1, categories: ['alltag', 'essen'], difficulty: 'mixed', familyFriendlyOnly: true, fakeWord: false, secretVote: false, traitorsKnowEachOther: false,
+    players: 5, traitors: 1, categories: ['alltag', 'essen'], difficulty: 'mixed', theme: 'modern', familyFriendlyOnly: true, fakeWord: false, secretVote: false, traitorsKnowEachOther: false,
     names: [], avatars: [], gamePlayers: [], civilianWord: '', fakeWordValue: '', selectedWordCategory: '', revealIndex: 0, revealedOnce: false,
     round: 1, starterId: null, voterIndex: 0, votes: {}, selectedCandidateId: null, voteCandidates: null,
     eliminatedId: null, winner: null, currentScreen: 'start', gameActive: false
@@ -52,8 +52,13 @@
     return copy;
   };
   const AVATAR_COUNT = 30;
-  const avatarPath = avatarNumber => `assets/Bild${avatarNumber}.png`;
-  const avatarMarkup = (player, className = '') => `<span class="player-avatar ${className}"><img src="${avatarPath(player.avatar)}" alt="" draggable="false"><span class="player-avatar__fallback">${escapeHtml(player.name.charAt(0).toUpperCase())}</span></span>`;
+  const avatarPath = (avatarNumber, theme = state.theme) => {
+    const number = String(avatarNumber).padStart(2, '0');
+    return theme === 'comic'
+      ? `assets/comic/avatars/Comic_Avatar${number}.PNG`
+      : `assets/Bild${avatarNumber}.png`;
+  };
+  const avatarMarkup = (player, className = '') => `<span class="player-avatar ${className}"><img src="${avatarPath(player.avatar)}" data-avatar-number="${player.avatar}" alt="" draggable="false"><span class="player-avatar__fallback">${escapeHtml(player.name.charAt(0).toUpperCase())}</span></span>`;
 
   function ensureAvatarAssignments(count = state.players) {
     const valid = [];
@@ -291,6 +296,29 @@
     }, 1900);
   }
 
+  function refreshThemeAssets() {
+    document.querySelectorAll('.player-avatar img[data-avatar-number]').forEach(img => {
+      const avatarNumber = Number(img.dataset.avatarNumber);
+      if (!Number.isInteger(avatarNumber)) return;
+      const nextSource = avatarPath(avatarNumber);
+      if (img.getAttribute('src') === nextSource) return;
+      const wrapper = img.closest('.player-avatar');
+      wrapper?.classList.remove('is-loaded', 'is-missing');
+      img.src = nextSource;
+      if (img.complete && img.naturalWidth) wrapper?.classList.add('is-loaded');
+    });
+  }
+
+  function applyTheme(theme = state.theme) {
+    const selectedTheme = theme === 'comic' ? 'comic' : 'modern';
+    state.theme = selectedTheme;
+    document.body.classList.toggle('theme-modern', selectedTheme === 'modern');
+    document.body.classList.toggle('theme-comic', selectedTheme === 'comic');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.setAttribute('content', selectedTheme === 'comic' ? '#14213d' : '#070a12');
+    refreshThemeAssets();
+  }
+
   function updateControls() {
     state.players = clamp(state.players, 3, 12);
     state.traitors = clamp(state.traitors, 1, maxTraitors());
@@ -311,6 +339,9 @@
     });
     const difficultyInput = document.querySelector(`input[name="difficulty"][value="${state.difficulty}"]`);
     if (difficultyInput) difficultyInput.checked = true;
+    const themeInput = document.querySelector(`input[name="theme"][value="${state.theme}"]`);
+    if (themeInput) themeInput.checked = true;
+    applyTheme(state.theme);
   }
 
   function selectedCategorySummary() {
@@ -322,6 +353,8 @@
   function readSettings() {
     state.categories = [...document.querySelectorAll('input[name="category"]:checked')].map(input => input.value);
     state.difficulty = document.querySelector('input[name="difficulty"]:checked')?.value || 'mixed';
+    state.theme = document.querySelector('input[name="theme"]:checked')?.value || 'modern';
+    applyTheme(state.theme);
     state.familyFriendlyOnly = $('familyFriendlyOnly').checked;
     state.fakeWord = $('fakeWord').checked;
     state.secretVote = $('secretVote').checked;
@@ -397,7 +430,7 @@
     state.names = state.names.slice(0, state.players);
     ensureAvatarAssignments(state.players);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      players: state.players, traitors: state.traitors, categories: state.categories, difficulty: state.difficulty,
+      players: state.players, traitors: state.traitors, categories: state.categories, difficulty: state.difficulty, theme: state.theme,
       familyFriendlyOnly: state.familyFriendlyOnly, fakeWord: state.fakeWord, secretVote: state.secretVote,
       traitorsKnowEachOther: state.traitorsKnowEachOther, names: state.names, avatars: state.avatars
     }));
@@ -409,12 +442,14 @@
     settingsSaveTimer = window.setTimeout(() => saveSettings(), delay);
   }
 
-  function loadSettings() {
+  function loadSettings(restoreSavedTheme = true) {
+    const currentTheme = state.theme;
     try {
       const raw = localStorage.getItem(STORAGE_KEY) || LEGACY_STORAGE_KEYS.map(key => localStorage.getItem(key)).find(Boolean);
       const saved = JSON.parse(raw);
       if (!saved) return false;
       Object.assign(state, saved);
+      if (!restoreSavedTheme) state.theme = currentTheme;
       if (!Array.isArray(state.categories) || !state.categories.length) {
         const legacyMap = { alltag: ['alltag'], essen: ['essen'], geografie: ['reisen', 'tiere_natur', 'schweiz'], gemischt: Object.keys(categoryLabels) };
         state.categories = legacyMap[saved.category] || ['alltag', 'essen'];
@@ -430,6 +465,8 @@
       }
 
       if (!['easy', 'normal', 'hard', 'mixed'].includes(state.difficulty)) state.difficulty = 'mixed';
+      if (!['modern', 'comic'].includes(state.theme)) state.theme = 'modern';
+      applyTheme(state.theme);
       if (typeof state.familyFriendlyOnly !== 'boolean') state.familyFriendlyOnly = true;
       if (!Array.isArray(state.avatars)) state.avatars = [];
       ensureAvatarAssignments(state.players);
@@ -846,7 +883,7 @@
   $('startButton').addEventListener('click', () => {
     clearSavedGame();
     resetRoundState();
-    loadSettings();
+    loadSettings(false);
     updateControls();
     while (state.names.length < state.players) state.names.push('');
     state.names = state.names.slice(0, state.players);
@@ -862,12 +899,12 @@
   });
   $('resumeGameButton').addEventListener('click', restoreSavedGame);
   $('managePlayersButton').addEventListener('click', () => {
-    loadSettings();
+    loadSettings(false);
     renderNameFields();
     showScreen('players');
   });
   $('continueButton').addEventListener('click', () => {
-    loadSettings();
+    loadSettings(false);
     updateControls();
     showScreen('setup');
   });

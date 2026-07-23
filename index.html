@@ -24,9 +24,9 @@
       -webkit-touch-callout: default !important;
     }
   </style>
-  <link rel="stylesheet" href="css/app.css?v=6.1.5">
+  <link rel="stylesheet" href="css/app.css?v=7.2.6">
 </head>
-<body>
+<body class="theme-modern">
   <main class="app-shell" id="app">
     <div class="hero" id="hero" aria-hidden="true">
       <div class="hero__blur"></div><div class="hero__image"></div><div class="hero__shade"></div><div class="hero__vignette"></div>
@@ -68,6 +68,10 @@
           <label><input type="radio" name="difficulty" value="normal"><span>Normal</span></label>
           <label><input type="radio" name="difficulty" value="hard"><span>Schwer</span></label>
           <label><input type="radio" name="difficulty" value="mixed" checked><span>Gemischt</span></label>
+        </div></section>
+        <section class="setting-section theme-setting"><div class="section-heading"><h3>Design auswählen</h3><p>Wähle das Erscheinungsbild der App.</p></div><div class="theme-grid" role="radiogroup" aria-label="Design auswählen">
+          <label class="theme-card"><input type="radio" name="theme" value="modern" checked><span class="theme-card__surface"><span class="theme-card__preview theme-card__preview--modern" aria-hidden="true"><span></span><span></span><span></span></span><span class="theme-card__copy"><strong>Modern</strong><small>Dunkel und elegant</small></span><span class="theme-card__check" aria-hidden="true">✓</span></span></label>
+          <label class="theme-card"><input type="radio" name="theme" value="comic"><span class="theme-card__surface"><span class="theme-card__preview theme-card__preview--comic" aria-hidden="true"><span></span><span></span><span></span></span><span class="theme-card__copy"><strong>Comic</strong><small>Für Kinder</small></span><span class="theme-card__check" aria-hidden="true">✓</span></span></label>
         </div></section>
         <section class="glass-card option-list">
           <label class="toggle-row"><span><strong>Familienfreundlich</strong><small>Blendet Begriffe für Erwachsenenrunden aus.</small></span><input type="checkbox" id="familyFriendlyOnly" checked><span class="switch"></span></label>
@@ -157,11 +161,11 @@
     </section>
 
     <dialog class="dialog" id="rulesDialog"><div class="dialog__surface"><button class="dialog__close" type="button" data-close-dialog>×</button><p class="dialog__eyebrow">Kurz erklärt</p><h2>Spielregeln</h2><p>Fast alle kennen dasselbe geheime Wort. Die Verräter kennen es nicht oder erhalten ein Fake-Wort. Reihum nennt jede Person einen passenden Hinweis. Danach entscheidet die Gruppe, wer verdächtig ist.</p><button class="button button--secondary" type="button" data-close-dialog>Verstanden</button></div></dialog>
-    <dialog class="dialog" id="aboutDialog"><div class="dialog__surface"><button class="dialog__close" type="button" data-close-dialog>×</button><p class="dialog__eyebrow">Das geheime Wort</p><h2>Lokales Partyspiel</h2><p>Das Spiel läuft vollständig auf einem Gerät. Das iPhone wird für das Aufdecken der Rollen und später für geheime Abstimmungen weitergegeben.<br><br><small>Version 6.1.5</small></p><button class="button button--secondary" type="button" data-close-dialog>Schliessen</button></div></dialog>
+    <dialog class="dialog" id="aboutDialog"><div class="dialog__surface"><button class="dialog__close" type="button" data-close-dialog>×</button><p class="dialog__eyebrow">Das geheime Wort</p><h2>Lokales Partyspiel</h2><p>Das Spiel läuft vollständig auf einem Gerät. Das iPhone wird für das Aufdecken der Rollen und später für geheime Abstimmungen weitergegeben.<br><br><small>Version 7.2.6</small></p><button class="button button--secondary" type="button" data-close-dialog>Schliessen</button></div></dialog>
     <dialog class="dialog" id="cancelDialog"><div class="dialog__surface"><p class="dialog__eyebrow">Runde abbrechen?</p><h2>Zurück zur Vorbereitung</h2><p>Die bereits verteilten Rollen werden verworfen.</p><div class="dialog__actions"><button class="button button--secondary" id="keepPlayingButton" type="button">Weiterspielen</button><button class="button button--danger" id="confirmCancelButton" type="button">Runde abbrechen</button></div></div></dialog>
     <div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true"></div>
   </main>
   <script src="data/words.js"></script>
-  <script src="js/app.js?v=6.1.5"></script>
+  <script src="js/app.js?v=7.2.6"></script>
 </body>
 </html>
