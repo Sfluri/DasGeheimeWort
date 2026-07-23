@@ -24,7 +24,7 @@
       -webkit-touch-callout: default !important;
     }
   </style>
-  <link rel="stylesheet" href="css/app.css?v=6.1.4">
+  <link rel="stylesheet" href="css/app.css?v=6.1.5">
 </head>
 <body>
   <main class="app-shell" id="app">
@@ -80,7 +80,7 @@
     <section class="screen screen--scroll screen--players" id="screen-players" aria-labelledby="players-title" aria-hidden="true">
       <header class="topbar"><button class="icon-button" data-back="setup" type="button" aria-label="Zurück zu den Einstellungen">←</button><div><p class="topbar__eyebrow">Einstellungen</p><h2 class="topbar__title" id="players-title">Spieler verwalten</h2></div></header>
       <div class="players-intro glass-card"><div><strong>Namen eingeben</strong><p>Änderungen werden automatisch gespeichert.</p></div></div>
-      <form class="players-form" id="playersForm"><div class="name-list" id="nameList"></div></form>
+      <form class="players-form" id="playersForm"><div class="name-list" id="nameList"></div><p class="form-error" id="duplicateNameHint" role="status" aria-live="polite" hidden>Jeder Spieler benötigt einen eindeutigen Namen.</p></form>
     </section>
 
 
@@ -157,11 +157,11 @@
     </section>
 
     <dialog class="dialog" id="rulesDialog"><div class="dialog__surface"><button class="dialog__close" type="button" data-close-dialog>×</button><p class="dialog__eyebrow">Kurz erklärt</p><h2>Spielregeln</h2><p>Fast alle kennen dasselbe geheime Wort. Die Verräter kennen es nicht oder erhalten ein Fake-Wort. Reihum nennt jede Person einen passenden Hinweis. Danach entscheidet die Gruppe, wer verdächtig ist.</p><button class="button button--secondary" type="button" data-close-dialog>Verstanden</button></div></dialog>
-    <dialog class="dialog" id="aboutDialog"><div class="dialog__surface"><button class="dialog__close" type="button" data-close-dialog>×</button><p class="dialog__eyebrow">Das geheime Wort</p><h2>Lokales Partyspiel</h2><p>Das Spiel läuft vollständig auf einem Gerät. Das iPhone wird für das Aufdecken der Rollen und später für geheime Abstimmungen weitergegeben.<br><br><small>Version 6.1.4</small></p><button class="button button--secondary" type="button" data-close-dialog>Schliessen</button></div></dialog>
+    <dialog class="dialog" id="aboutDialog"><div class="dialog__surface"><button class="dialog__close" type="button" data-close-dialog>×</button><p class="dialog__eyebrow">Das geheime Wort</p><h2>Lokales Partyspiel</h2><p>Das Spiel läuft vollständig auf einem Gerät. Das iPhone wird für das Aufdecken der Rollen und später für geheime Abstimmungen weitergegeben.<br><br><small>Version 6.1.5</small></p><button class="button button--secondary" type="button" data-close-dialog>Schliessen</button></div></dialog>
     <dialog class="dialog" id="cancelDialog"><div class="dialog__surface"><p class="dialog__eyebrow">Runde abbrechen?</p><h2>Zurück zur Vorbereitung</h2><p>Die bereits verteilten Rollen werden verworfen.</p><div class="dialog__actions"><button class="button button--secondary" id="keepPlayingButton" type="button">Weiterspielen</button><button class="button button--danger" id="confirmCancelButton" type="button">Runde abbrechen</button></div></div></dialog>
     <div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true"></div>
   </main>
   <script src="data/words.js"></script>
-  <script src="js/app.js?v=6.1.4"></script>
+  <script src="js/app.js?v=6.1.5"></script>
 </body>
 </html>

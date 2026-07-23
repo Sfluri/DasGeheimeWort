@@ -456,19 +456,41 @@
       input.addEventListener('input', () => {
         state.names[index] = input.value;
         clear.disabled = !input.value;
-        label.classList.remove('name-error');
+        validateNamesLive();
         saveSettingsSoon();
       });
       clear.addEventListener('click', () => {
         input.value = '';
         state.names[index] = '';
         clear.disabled = true;
+        validateNamesLive();
         saveSettings();
         input.focus();
       });
       $('nameList').appendChild(label);
     });
     bindAvatarFallbacks($('nameList'));
+    validateNamesLive();
+  }
+
+  function validateNamesLive() {
+    const fields = [...document.querySelectorAll('.name-field')];
+    const hint = $('duplicateNameHint');
+    const normalized = state.names.map(name => name.trim().toLocaleLowerCase('de-CH'));
+    const counts = normalized.reduce((map, name) => {
+      if (name) map.set(name, (map.get(name) || 0) + 1);
+      return map;
+    }, new Map());
+    let hasDuplicates = false;
+
+    fields.forEach((field, index) => {
+      const isDuplicate = normalized[index] && counts.get(normalized[index]) > 1;
+      field.classList.toggle('name-error', Boolean(isDuplicate));
+      if (isDuplicate) hasDuplicates = true;
+    });
+
+    if (hint) hint.hidden = !hasDuplicates;
+    return hasDuplicates;
   }
 
   function validateNames() {
@@ -476,7 +498,7 @@
     const normalized = state.names.map(name => name.trim());
     const emptyIndexes = normalized.map((name, index) => !name ? index : -1).filter(index => index >= 0);
     const lowered = normalized.map(name => name.toLocaleLowerCase('de-CH'));
-    const duplicateIndexes = lowered.map((name, index) => name && lowered.indexOf(name) !== index ? index : -1).filter(index => index >= 0);
+    const duplicateIndexes = lowered.map((name, index) => name && lowered.filter(item => item === name).length > 1 ? index : -1).filter(index => index >= 0);
     fields.forEach((field, index) => field.classList.toggle('name-error', emptyIndexes.includes(index) || duplicateIndexes.includes(index)));
     if (emptyIndexes.length) {
       showToast('Bitte erfasse alle Spielernamen.');

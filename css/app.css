@@ -513,6 +513,15 @@ button { color: inherit; }
 }
 .name-field__clear:disabled { opacity: 0; pointer-events: none; }
 .name-error { border-color: rgba(255,101,122,.7); animation: shake .32s ease; }
+.form-error {
+  margin: 2px 4px 0;
+  color: #ff657a;
+  font-size: .86rem;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: center;
+}
+.form-error[hidden] { display: none; }
 
 .minimal-topbar {
   position: absolute;
